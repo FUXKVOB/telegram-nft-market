@@ -5,10 +5,10 @@ import { TonConnectUIProvider, TonConnectButton, useTonWallet, useTonConnectUI }
 
 function Navbar() {
   return (
-    <nav className="p-4 bg-gray-900 text-white flex justify-between rounded-b-2xl shadow-lg">
-      <Link to="/" className="font-bold text-xl">NFT Gifts</Link>
+    <nav className="p-4 bg-gradient-to-r from-indigo-600 to-purple-600 text-white flex justify-between rounded-b-2xl shadow-lg">
+      <Link to="/" className="font-bold text-xl">🎁 NFT Gifts</Link>
       <div className="space-x-4">
-        <Link to="/upload">Добавить</Link>
+        <Link to="/upload" className="hover:underline">Добавить</Link>
       </div>
     </nav>
   );
@@ -23,14 +23,14 @@ function Home() {
 
   return (
     <div className="p-6">
-      <h1 className="text-2xl font-bold mb-4">Маркет подарков</h1>
+      <h1 className="text-3xl font-bold mb-6">Маркет подарков</h1>
       {gifts.length === 0 ? (
         <p className="text-gray-500">Подарков пока нет.</p>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {gifts.map((gift) => (
-            <Link key={gift.id} to={`/gift/${gift.id}`} className="p-4 bg-white rounded-2xl shadow hover:shadow-xl transition">
-              <h2 className="font-semibold">{gift.name}</h2>
+            <Link key={gift.id} to={`/gift/${gift.id}`} className="p-6 bg-white rounded-2xl shadow hover:shadow-xl transition">
+              <h2 className="font-semibold text-lg">{gift.name}</h2>
             </Link>
           ))}
         </div>
@@ -73,7 +73,6 @@ function UploadGift() {
       return;
     }
     console.log("Отправка подарка:", name, "от", wallet.account.address);
-    // Пример транзакции
     await tonConnectUI.sendTransaction({
       validUntil: Math.floor(Date.now() / 1000) + 60,
       messages: [{
@@ -92,7 +91,7 @@ function UploadGift() {
           placeholder="Название подарка"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          className="w-full p-2 border rounded-xl"
+          className="w-full p-3 border rounded-xl"
         />
         <button type="submit" className="px-4 py-2 bg-blue-600 text-white rounded-xl shadow hover:bg-blue-700">
           Отправить
@@ -112,7 +111,7 @@ function ConnectWallet() {
 
 export default function App() {
   return (
-    <TonConnectUIProvider manifestUrl="/tonconnect-manifest.json">
+    <TonConnectUIProvider manifestUrl="./tonconnect-manifest.json">
       <Router>
         <div className="min-h-screen bg-gray-100">
           <Navbar />
